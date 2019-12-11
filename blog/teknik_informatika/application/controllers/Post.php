@@ -19,8 +19,8 @@ class Post extends CI_Controller
 	public function input()
 	{
 		$this->form_validation->set_rules('category', 'Category', 'required');
-		$this->form_validation->set_rules('image', 'Image', 'required');
 		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('image', 'Image', 'trim');
 		$this->form_validation->set_rules('description', 'Description', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -33,24 +33,33 @@ class Post extends CI_Controller
 			$this->load->view('v_post_form', $data);
 			$this->load->view('templates/footer');
 		} else {
-			$params = [
-				'id_user' => $this->session->userdata('id'),
-				'id_category' => $this->input->post('category', TRUE),
-				'image' => 'default.jpg',
-				'title' => $this->input->post('title', TRUE),
-				'description' => $this->input->post('description', TRUE),
-				'created_post' => time()
-			];
-			$this->session->set_flashdata(
-				'message',
-				'<div class="alert alert-success alert-dismissible fade show btn-sm" role="alert">Posting successfully !
+
+			$config['upload_path']          = './assets/img/posted';
+			$config['allowed_types']        = 'gif|jpg|png|jpeg';
+			$config['max_size']             = 2048;
+
+			$this->load->library('upload', $config);
+			if ($this->upload->do_upload('image')) {
+				$img = $this->upload->data('file_name');
+				$params = [
+					'id_user' => $this->session->userdata('id'),
+					'id_category' => $this->input->post('category', TRUE),
+					'image' => $img,
+					'title' => $this->input->post('title', TRUE),
+					'description' => $this->input->post('description', TRUE),
+					'created_post' => time()
+				];
+				$this->session->set_flashdata(
+					'message',
+					'<div class="alert alert-success alert-dismissible fade show btn-sm" role="alert">Posting successfully !
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>'
-			);
-			$this->m_blog->posting($params);
-			redirect('post');
+				);
+				$this->m_blog->posting($params);
+				redirect('post');
+			}
 		}
 	}
 }

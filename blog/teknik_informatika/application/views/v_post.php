@@ -26,23 +26,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<?php
-							$no = 1;
-							foreach ($get_posted as $gp) :
-								?>
+						<?php
+						$no = 1;
+						foreach ($get_posted as $gp) :
+							?>
+							<tr>
 								<td><?= $no++ ?></td>
-								<td><img class="rounded" src="<?= base_url('assets/img/posted/') . $gp->image ?>"></td>
+								<td><img class="rounded" width="150" height="150" src="<?= base_url('assets/img/posted/') . $gp->image ?>"></td>
 								<td><?= $gp->id_category ?></td>
 								<td><?= $gp->title; ?></td>
 								<td><?= $gp->description; ?></td>
 								<td><a href="#" class="btn btn-warning btn-sm font-weight-bold"><i class="fas fa-info-circle"></i></a></td>
 								<td><a href="#" class="btn btn-primary btn-sm font-weight-bold"><i class="fas fa-edit"></i></a></td>
 								<td><a href="#" class="btn btn-danger btn-sm font-weight-bold"><i class="fas fa-trash"></i></a></td>
-							<?php
-							endforeach;
-							?>
-						</tr>
+							</tr>
+						<?php
+						endforeach;
+						?>
 					</tbody>
 				</table>
 			</div>
