@@ -7,8 +7,9 @@ class Beranda extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Blog TI | Beranda';
+		$data['get_join'] = $this->m_blog->all_posted();
 		$this->load->view('templates/beranda/header', $data);
-		$this->load->view('v_beranda');
+		$this->load->view('v_beranda', $data);
 		$this->load->view('templates/beranda/footer');
 	}
 }

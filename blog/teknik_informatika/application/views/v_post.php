@@ -18,6 +18,7 @@
 					<thead>
 						<tr>
 							<th>No</th>
+							<th>Name</th>
 							<th>Image</th>
 							<th>Category</th>
 							<th>Title</th>
@@ -28,12 +29,13 @@
 					<tbody>
 						<?php
 						$no = 1;
-						foreach ($get_posted as $gp) :
+						foreach ($get_join as $gp) :
 							?>
 							<tr>
 								<td><?= $no++ ?></td>
+								<td><?= $gp->name_user ?></td>
 								<td><img class="rounded" width="150" height="150" src="<?= base_url('assets/img/posted/') . $gp->image ?>"></td>
-								<td><?= $gp->id_category ?></td>
+								<td><?= $gp->name_category ?></td>
 								<td><?= $gp->title; ?></td>
 								<td><?= $gp->description; ?></td>
 								<td><a href="#" class="btn btn-warning btn-sm font-weight-bold"><i class="fas fa-info-circle"></i></a></td>

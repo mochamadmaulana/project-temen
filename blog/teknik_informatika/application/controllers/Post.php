@@ -7,7 +7,7 @@ class Post extends CI_Controller
 	{
 		$data_session =  $this->session->userdata('email');
 		$data['user'] = $this->m_blog->login($data_session);
-		$data['get_posted'] = $this->m_blog->all_posted();
+		$data['get_join'] = $this->m_blog->all_posted();
 		$data['get_category'] = $this->m_blog->all_category();
 		$data['title'] = 'Blog TI | Posted';
 		$this->load->view('templates/header', $data);
@@ -19,7 +19,7 @@ class Post extends CI_Controller
 	public function input()
 	{
 		$this->form_validation->set_rules('category', 'Category', 'required');
-		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('title', 'Title', 'required|max_length[250]');
 		$this->form_validation->set_rules('image', 'Image', 'trim');
 		$this->form_validation->set_rules('description', 'Description', 'required');
 
@@ -33,7 +33,6 @@ class Post extends CI_Controller
 			$this->load->view('v_post_form', $data);
 			$this->load->view('templates/footer');
 		} else {
-
 			$config['upload_path']          = './assets/img/posted';
 			$config['allowed_types']        = 'gif|jpg|png|jpeg';
 			$config['max_size']             = 2048;
